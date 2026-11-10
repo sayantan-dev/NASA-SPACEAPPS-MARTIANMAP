@@ -1,55 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ARES: Mars Mission Control</title>
-<link rel="stylesheet" href="css/styles.css">
-</head>
-<body class="solar-system-mode">
-<div id="stage"></div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARES: Mars Mission Control</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="solar-system-mode">
+    <div id="stage"></div>
 
-<header id="top">
-  <div class="brand"><b>ARES</b><span>Mars Mission Control</span></div>
-  <nav id="nav" aria-label="Modules"></nav>
-  <button class="btn ghost" data-act="guide">Mission guide</button>
-</header>
+    <header id="top">
+      <div class="brand"><b>ARES</b><span>Mars Mission Control</span></div>
+      <nav id="nav" aria-label="Modules"></nav>
+      <button class="btn ghost" data-act="guide">Mission guide</button>
+    </header>
 
-<div id="mission-stamp" aria-hidden="true">
-  <p class="eyebrow">Active study region</p>
-  <strong>JEZERO CRATER · MARS</strong>
-  <span>PERSEVERANCE LANDING REF · 18.44463° N / 77.45088° E</span>
-</div>
-<div id="map-tools" aria-label="Map controls">
-  <button class="tool-btn" data-act="recenter" title="Return to terrain overview"><span class="sym">◎</span>Recenter</button>
-  <button class="tool-btn" data-act="go" data-m="explore" title="Open surface layer controls"><span class="sym">▧</span>Layers</button>
-  <button class="tool-btn" data-act="panel" title="Show or hide the instrument panel"><span class="sym">⌁</span>Panel</button>
-</div>
-<aside id="panel" class="rise" aria-live="polite"></aside>
-<div id="hud" aria-live="off"></div>
-<div id="toast" role="status"></div>
-<div id="tour" hidden></div>
-<div id="modal" hidden></div>
+    <div id="mission-stamp" aria-hidden="true">
+      <p class="eyebrow">Active study region</p>
+      <strong>JEZERO CRATER · MARS</strong>
+      <span>PERSEVERANCE LANDING REF · 18.44463° N / 77.45088° E</span>
+    </div>
+    <div id="map-tools" aria-label="Map controls">
+      <button
+        class="tool-btn"
+        data-act="recenter"
+        title="Return to terrain overview"
+      >
+        <span class="sym">◎</span>Recenter
+      </button>
+      <button
+        class="tool-btn"
+        data-act="go"
+        data-m="explore"
+        title="Open surface layer controls"
+      >
+        <span class="sym">▧</span>Layers
+      </button>
+      <button
+        class="tool-btn"
+        data-act="panel"
+        title="Show or hide the instrument panel"
+      >
+        <span class="sym">⌁</span>Panel
+      </button>
+    </div>
+    <aside id="panel" class="rise" aria-live="polite"></aside>
+    <div id="hud" aria-live="off"></div>
+    <div id="toast" role="status"></div>
+    <div id="tour" hidden></div>
+    <div id="modal" hidden></div>
 
-<div id="intro" class="planetarium">
-  <div id="solar-view" role="img" aria-label="Live three-dimensional Solar System with selectable planets"></div><div class="space-vignette" aria-hidden="true"></div>
-  <header class="planetarium-top"><div class="mission-mark"><b>ARES</b><span>PLANETARY NAVIGATION</span></div><div class="system-readout"><i></i><span>LIVE ORBITAL MODEL</span><b id="solar-clock">SIMULATION RUNNING</b></div><button id="overview-mode" class="flight-control">SYSTEM OVERVIEW</button></header>
-  <aside class="planet-dossier" aria-live="polite"><p class="dossier-kicker">INTERPLANETARY EXPEDITION <span id="planet-index">04 / 08</span></p><div id="planet-readout" class="planet-readout"><small>SELECTED WORLD</small><b>MARS</b><span>Terrestrial planet · 4th from the Sun</span><p>Ancient lake basin. Preserved delta deposits. A landscape built for discovery.</p></div><div id="planet-facts" class="planet-facts"></div><button id="enter" class="mission-launch">BEGIN MARS EXPEDITION <span>↗</span></button><p id="status" class="dossier-status">JEZERO TERRAIN SYSTEMS READY</p></aside>
-  <nav class="planetary-rail" aria-label="Select a planet"><span class="rail-label">SELECT DESTINATION</span><div class="planet-selector"><button data-planet="Mercury"><i>01</i><span>MERCURY</span></button><button data-planet="Venus"><i>02</i><span>VENUS</span></button><button data-planet="Earth"><i>03</i><span>EARTH</span></button><button data-planet="Mars" class="active" aria-pressed="true"><i>04</i><span>MARS</span></button><button data-planet="Jupiter"><i>05</i><span>JUPITER</span></button><button data-planet="Saturn"><i>06</i><span>SATURN</span></button><button data-planet="Uranus"><i>07</i><span>URANUS</span></button><button data-planet="Neptune"><i>08</i><span>NEPTUNE</span></button></div></nav>
-  <div class="planetarium-controls"><button id="orbit-toggle" class="flight-control">Ⅱ <span>PAUSE MOTION</span></button><label>ORBIT RATE <select id="orbit-speed"><option value="0.25">¼×</option><option value="0.5">½×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></label><button id="orbit-reset" class="flight-control">↺ <span>RE-CENTER</span></button></div>
-  <div class="model-note">SCHEMATIC SYSTEM MODEL · DISTANCES / RADII COMPRESSED · ORBIT RATES APPROXIMATE · MAP CREDITS IN DATA &amp; PROVENANCE</div>
-</div>
-<div id="journey-hud" class="journey-hud" hidden><div class="journey-head"><span>ARES / ARRIVAL SEQUENCE</span><span id="journey-progress-text">01 — PLANETARY APPROACH</span></div><p id="journey-status">APPROACHING MARS</p><div class="journey-progress"><i id="journey-progress-bar"></i></div><button id="journey-cancel" class="flight-control">CANCEL ARRIVAL</button></div>
-<button id="solar-return" class="flight-control" type="button">↶ RETURN TO SOLAR SYSTEM</button>
+    <!-- ARES COPILOT WIDGET -->
+    <div id="ares-copilot-container">
+      <!-- Collapsed Trigger Badge -->
+      <div id="ares-copilot-badge" class="panel-clickable">
+        <div class="mars-logo-mini"></div>
+        <span class="badge-text">Need any help? Ask Ares Copilot...</span>
+      </div>
 
-<script src="vendor/three.min.js"></script>
-<script src="vendor/OrbitControls.js"></script>
-<script src="vendor/CSS2DRenderer.js"></script>
-<script src="data/ares-data.js"></script>
-<script src="js/orbit-math.js"></script>
-<script src="js/model.js"></script>
-<script src="js/solar-system.js"></script>
-<script src="js/scene.js"></script>
-<script src="js/ui.js"></script>
-</body>
+      <!-- Expanded Chat Window -->
+      <div id="ares-copilot-window" class="hidden">
+        <div class="chat-header">
+          <div class="chat-title">
+            <span class="signal-dot active"></span>
+            ARES // MISSION COPILOT
+          </div>
+          <button id="chat-close-btn">&times;</button>
+        </div>
+        <div id="chat-log">
+          <div class="chat-message bot">
+            SYSTEM: Copilot online. Ask me about mission data theory, orbital
+            paths, terrain analytics, or app usage.
+          </div>
+        </div>
+        <div class="chat-input-row">
+          <input
+            type="text"
+            id="chat-input"
+            placeholder="Enter query parameters..."
+            autocomplete="off"
+          />
+          <button id="chat-send-btn">SEND</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="intro" class="planetarium">
+      <div
+        id="solar-view"
+        role="img"
+        aria-label="Live three-dimensional Solar System with selectable planets"
+      ></div>
+      <div class="space-vignette" aria-hidden="true"></div>
+      <header class="planetarium-top">
+        <div class="mission-mark">
+          <b>ARES</b><span>PLANETARY NAVIGATION</span>
+        </div>
+        <div class="system-readout">
+          <i></i><span>LIVE ORBITAL MODEL</span
+          ><b id="solar-clock">SIMULATION RUNNING</b>
+        </div>
+        <button id="overview-mode" class="flight-control">
+          SYSTEM OVERVIEW
+        </button>
+      </header>
+      <aside class="planet-dossier" aria-live="polite">
+        <p class="dossier-kicker">
+          INTERPLANETARY EXPEDITION <span id="planet-index">04 / 08</span>
+        </p>
+        <div id="planet-readout" class="planet-readout">
+          <small>SELECTED WORLD</small><b>MARS</b
+          ><span>Terrestrial planet · 4th from the Sun</span>
+          <p>
+            Ancient lake basin. Preserved delta deposits. A landscape built for
+            discovery.
+          </p>
+        </div>
+        <div id="planet-facts" class="planet-facts"></div>
+        <button id="enter" class="mission-launch">
+          BEGIN MARS EXPEDITION <span>↗</span>
+        </button>
+        <p id="status" class="dossier-status">JEZERO TERRAIN SYSTEMS READY</p>
+      </aside>
+      <nav class="planetary-rail" aria-label="Select a planet">
+        <span class="rail-label">SELECT DESTINATION</span>
+        <div class="planet-selector">
+          <button data-planet="Mercury"><i>01</i><span>MERCURY</span></button
+          ><button data-planet="Venus"><i>02</i><span>VENUS</span></button
+          ><button data-planet="Earth"><i>03</i><span>EARTH</span></button
+          ><button data-planet="Mars" class="active" aria-pressed="true">
+            <i>04</i><span>MARS</span></button
+          ><button data-planet="Jupiter"><i>05</i><span>JUPITER</span></button
+          ><button data-planet="Saturn"><i>06</i><span>SATURN</span></button
+          ><button data-planet="Uranus"><i>07</i><span>URANUS</span></button
+          ><button data-planet="Neptune"><i>08</i><span>NEPTUNE</span></button>
+        </div>
+      </nav>
+      <div class="planetarium-controls">
+        <button id="orbit-toggle" class="flight-control">
+          Ⅱ <span>PAUSE MOTION</span></button
+        ><label
+          >ORBIT RATE
+          <select id="orbit-speed">
+            <option value="0.25">¼×</option>
+            <option value="0.5">½×</option>
+            <option value="1" selected>1×</option>
+            <option value="2">2×</option>
+            <option value="4">4×</option>
+          </select></label
+        ><button id="orbit-reset" class="flight-control">
+          ↺ <span>RE-CENTER</span>
+        </button>
+      </div>
+      <div class="model-note">
+        SCHEMATIC SYSTEM MODEL · DISTANCES / RADII COMPRESSED · ORBIT RATES
+        APPROXIMATE · MAP CREDITS IN DATA &amp; PROVENANCE
+      </div>
+    </div>
+    <div id="journey-hud" class="journey-hud" hidden>
+      <div class="journey-head">
+        <span>ARES / ARRIVAL SEQUENCE</span
+        ><span id="journey-progress-text">01 — PLANETARY APPROACH</span>
+      </div>
+      <p id="journey-status">APPROACHING MARS</p>
+      <div class="journey-progress"><i id="journey-progress-bar"></i></div>
+      <button id="journey-cancel" class="flight-control">CANCEL ARRIVAL</button>
+    </div>
+    <button id="solar-return" class="flight-control" type="button">
+      ↶ RETURN TO SOLAR SYSTEM
+    </button>
+
+    <script src="vendor/three.min.js"></script>
+    <script src="vendor/OrbitControls.js"></script>
+    <script src="vendor/CSS2DRenderer.js"></script>
+    <script src="data/ares-data.js"></script>
+    <script src="js/orbit-math.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/solar-system.js"></script>
+    <script src="js/scene.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/copilot-brain.js"></script>
+  </body>
 </html>

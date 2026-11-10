@@ -4,7 +4,7 @@ This copy contains focused correctness and validation improvements. The original
 
 ## Implemented
 
-- A* rejects diagonal corner cutting unless both orthogonal side cells are valid and within the selected slope limit.
+- A\* rejects diagonal corner cutting unless both orthogonal side cells are valid and within the selected slope limit.
 - Start and destination indices are bounds-checked; a destination above the slope limit is no longer exempt.
 - The 20 m route grid retains both mean and maximum of its four 10 m browser-cell slope values. Traversability uses the maximum; cost weighting and mean reporting retain the average as a separate value.
 - Coarse cells containing invalid elevation or slope cells are blocked. Route paths are validated before being returned or measured.
@@ -46,7 +46,6 @@ This copy contains focused correctness and validation improvements. The original
 ## Data integrity
 
 `data/ares-data.js` was not edited. All improvements are in source code, tests, documentation, and runtime presentation. The original uploaded ZIP remains available separately as the rollback copy.
-
 
 ## 3D solar-system implementation update
 
@@ -97,6 +96,14 @@ This copy contains focused correctness and validation improvements. The original
 - The terrain camera now animates from a raised view through an intermediate waypoint to the landing-target overview while the two renderers crossfade. `ARES.terrainDiagnostics()` exposes canvas dimensions, scene mesh readiness, triangle count, camera state, texture readiness, and terrain render count for browser-side verification.
 - Motion is derived from accumulated elapsed clocks, not per-frame rotation increments. Orbit rate changes only the revolution clock; pause freezes both orbit and spin clocks. Negative sidereal periods encode retrograde relative to orbital north; axial pole tilts are applied in the local orbital plane and converted once to local mesh spin direction.
 - Added two regression suites: `tests/solar-motion.test.js` and `tests/arrival-lifecycle.test.js`. Both pass in the current environment, alongside the existing 15 planner tests. Browser/WebGL inspection remains incomplete because browser policy rejected the local project URL; no screenshots or recording are included.
+
+## 2026-11-11 conversational copilot and spatial camera linking
+
+- Extracted the chatbot interface engine into a fully standalone runtime module (`js/copilot-brain.js`) to expand information capacity without cluttering the primary UI layout code loops or introducing thread latency to the Three.js viewport execution.
+- Replaced rigid string matching with a deterministic, word-boundary fuzzy scoring algorithm. The system cleans text queries and calculates weights across multiple intent blocks, resolving varying user inputs gracefully (e.g., matching "what does the explorer tab do" vs "look around").
+- Extended the local knowledge base to span detailed usage documentation, data provenance logs, and geological metrics, returning helpful examples when incoming telemetry falls outside active pre-loaded parameters.
+- Hooked the conversation engine directly into the application's global WebGL camera parameters. When specific geographic landmarks (crater mapping view) or planning matrices (path telemetry view) are identified in conversation, the module updates the active `OrbitControls` targets and `camera.position` vectors to dynamically pinpoint relevant 3D mesh landscapes.
+- Validation rerun: `node --check` passed for all five application JavaScript files (`solar-system.js`, `model.js`, `scene.js`, `ui.js`, and `copilot-brain.js`). All 15 pathfinder planner cases and custom lifecycle regression suites continue to pass successfully. Layout styles remain untouched as the detached logic targets existing responsive element configurations.
 
 ## Planet appearance/pace refinement
 

@@ -35,6 +35,10 @@ No npm install, external CDN, remote font, or internet connection is required at
 - Environmental planning panel with explicitly labelled modelled/assumed inputs
 - Data and provenance explanations, including known limitations
 - Guided mission interface
+- Data and provenance explanations, including known limitations
+- Guided mission interface
+- ARES Mission Copilot — A separate, modular natural language intelligence overlay (`js/copilot-brain.js`) that handles usage walkthroughs, technical explanations, and data theory queries via a fuzzy-matching semantic scoring architecture.
+- Real-time Camera Kinematics Link — Context-aware integration that dynamically manipulates the Three.js camera position vectors and active OrbitControls targets to focus the viewport on specific geological landscape coordinates (e.g., Jezero Crater Delta) based on chatbot dialogue topics.
 
 ## Data integrity and scientific limitations
 
@@ -59,6 +63,7 @@ node --check js/solar-system.js
 node --check js/model.js
 node --check js/scene.js
 node --check js/ui.js
+node --check js/copilot-brain.js
 node tests/planner.test.js
 node tests/solar-motion.test.js
 node tests/arrival-lifecycle.test.js
@@ -70,4 +75,5 @@ The planner suite covers 15 cases. The Solar System math suite checks all eight 
 Browser/GPU rendering on your particular computer has not been independently verified from this environment. A WebGL-capable browser is required.
 
 ### Visual realism note
+
 The planetary maps are supplied NASA/JPL image products with differing resolution and coverage; some are representative or illustrative maps, and some contain missing coverage. They provide visual context only. The orbital distances and body sizes are compressed, and the cinematic descent is not a simulated spacecraft entry trajectory. The local Mars exploration view uses the embedded raster-derived study data documented in the technical review.
